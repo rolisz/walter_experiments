@@ -653,28 +653,28 @@ if __name__=='__main__':
     ''' move slow, then fast, then stop'''
     
     # ACCELERATE
-    speed = 0
-    maxSpeed = 300
+    #speed = 0
+    #maxSpeed = 300
     
-    accel = 0
-    jerk=1
-    accels = []
-    while speed < maxSpeed/2:
-        accel+=jerk
-        accels.append(accel)
-        speed += accel
-        #c.Drive(speed, 32767)
-        #time.sleep(0.1)
+    #accel = 0
+    #jerk=1
+    #accels = []
+    #while speed < maxSpeed/2:
+        #accel+=jerk
+        #accels.append(accel)
+        #speed += accel
+        ##c.Drive(speed, 32767)
+        ##time.sleep(0.1)
 
-    while speed < maxSpeed and accel > 0:
-        accel-=jerk
-        accels.append(accel)
-        speed += accel
-        #c.Drive(speed, 32767)
-        #time.sleep(0.1)
+    #while speed < maxSpeed and accel > 0:
+        #accel-=jerk
+        #accels.append(accel)
+        #speed += accel
+        ##c.Drive(speed, 32767)
+        ##time.sleep(0.1)
     
-    for acc in accels:
-        print acc
+    #for acc in accels:
+        #print acc
         
     #time.sleep(1)
     ## DECELLERATE
