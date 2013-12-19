@@ -1,46 +1,31 @@
-def changeSpeed(startSpeed, endSpeed, jerk=1.0):
-    changeSign = False
-    if startSpeed > endSpeed:
-        changeSign = True
-        startSpeed, endSpeed = endSpeed, startSpeed
-    accel = 0
-    speeds = []
-    
-    while startSpeed < endSpeed/2:
-        accel+=jerk
-        startSpeed += accel
-        speeds.append(startSpeed)
-
-    while startSpeed < endSpeed and accel > 0:
-        accel-=jerk
-        startSpeed += accel
-        speeds.append(startSpeed)
-        
-    if changeSign:
-        speeds.reverse()
-    return speeds
-        
 import math
 
 def sigmoid(x):
   return 1 / (1 + math.exp(-x))
 
-def getSpeeds(fromSpeed, toSpeed, steps):
-    ratio = (toSpeed - fromSpeed) / (sigmoid(5) - sigmoid(-5))
-    offset = fromSpeed
+def getPositions(fromPos, toPos, steps):
+    imageLen = (sigmoid(5) - sigmoid(-5))
+    ratio = (toPos - fromPos) / imageLen
+    offset = fromPos
+    positions = []
+    x = -4
+    while x<=4:
+        positions.append(offset+ratio*sigmoid(x))
+        x+= 8.0 / (steps-1)
+    return positions
+
+def getSpeeds(distance, steps):
+    fromPos = 0
+    toPos = distance
+    positions = getPositions(fromPos, toPos, steps)
     speeds = []
-    x = -5
-    while x<=5:
-        x+= 10.0 / steps
-        speeds.append(offset+ratio*sigmoid(x))
+    speeds.append(0)
+    for i in range(len(positions)-1):
+        speeds.append(positions[i+1]-positions[i])
+    speeds.append(0)
     return speeds
-def drive(x):
-    print x
 
-a = getSpeeds(0, 100, 20)
-b = changeSpeed(0, 100, 1)
+if __name__=='__main__':
+    for x in getSpeeds(100, 20):
+        print x
 
-for x, y in zip(a, b):
-    print x, y
-    
-#TODO: compare

@@ -634,63 +634,24 @@ if __name__=='__main__':
     
     #''' Hit enter to toggle whether it's running '''
     
+    from smooth import getSpeeds
+    import time
+    
     c = Create()
     c.Control()
-    #running = False
-    #speed = 50
-    #while True:
-        #x = str(raw_input())
-        #running = not running
-        #try:
-            #speed = int(x)
-        #except:
-            #pass
-        #if running:
-            #c.Drive(speed, 32767)
-        #else:
-            #c.SlowStop(50)
-            
-    ''' move slow, then fast, then stop'''
     
-    # ACCELERATE
-    #speed = 0
-    #maxSpeed = 300
+    # Distances are in milimeters
+    def smoothDriveStraight(dist, duration):
+        smoothDrive(dist, duration, RADIUS_STRAIGHT)
     
-    #accel = 0
-    #jerk=1
-    #accels = []
-    #while speed < maxSpeed/2:
-        #accel+=jerk
-        #accels.append(accel)
-        #speed += accel
-        ##c.Drive(speed, 32767)
-        ##time.sleep(0.1)
-
-    #while speed < maxSpeed and accel > 0:
-        #accel-=jerk
-        #accels.append(accel)
-        #speed += accel
-        ##c.Drive(speed, 32767)
-        ##time.sleep(0.1)
+    def smoothDrive(dist, duration, radius):    # Positive radius: to the left
+        sleepTime = 0.1
+        steps = duration/sleepTime
+        for speed in getSpeeds(dist, steps):
+            newSp = speed/sleepTime
+            c.Drive(newSp, radius)
+            print(newSp)
+            time.sleep(sleepTime)
     
-    #for acc in accels:
-        #print acc
-        
-    #time.sleep(1)
-    ## DECELLERATE
-    #while speed > maxSpeed/2:
-        #accel-=jerk
-        #speed += accel
-        #c.Drive(speed, 32767)
-        #time.sleep(0.1)
-        
-
-    #while speed > 0:
-        #accel+=jerk
-        #speed += accel
-        #c.Drive(speed, 32767)
-        #time.sleep(0.1)
-        
-    #c.Stop()
-    
+    smoothDrive(200, 2, 200)
     
