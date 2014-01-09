@@ -653,5 +653,14 @@ if __name__=='__main__':
             print(newSp)
             time.sleep(sleepTime)
     
-    smoothDrive(200, 2, 200)
+for i in range(5):
+    # Drive forward for 1500mm in 5s
+    smoothDriveStraight(1500,5)   
     
+    # Turn clockwise with speed 104 for 4 seconds (which is about 180 degrees)
+    c.TurnInPlace(104, 'cw')
+    time.sleep(4)
+    
+    c.Stop()
+    
+# TODO: smoothSetSpeed
